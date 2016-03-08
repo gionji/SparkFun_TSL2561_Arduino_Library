@@ -77,7 +77,7 @@ void setup()
 
   // For more information see the hookup guide at: https://learn.sparkfun.com/tutorials/getting-started-with-the-tsl2561-luminosity-sensor
 
-  light.begin();
+  light.begin(TSL2561_ADDR_0);
 
   // Get factory ID from sensor:
   // (Just for fun, you don't need to do this to operate the sensor)
