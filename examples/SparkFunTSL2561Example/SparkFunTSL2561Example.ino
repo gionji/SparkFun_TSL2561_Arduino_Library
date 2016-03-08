@@ -162,12 +162,6 @@ void loop()
   if (light.getData(data0,data1))
   {
     // getData() returned true, communication was successful
-    
-    Serial.print("data0: ");
-    Serial.print(data0);
-    Serial.print(" data1: ");
-    Serial.print(data1);
-  
     // To calculate lux, pass all your settings and readings
     // to the getLux() function.
     
