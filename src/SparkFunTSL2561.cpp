@@ -38,7 +38,7 @@ boolean SFE_TSL2561::begin(char i2c_address)
 	// Always returns true
 {
 	_i2c_address = i2c_address;
-	Wire.begin();
+	Wire1.begin();
 	return(true);
 }
 
@@ -290,9 +290,9 @@ boolean SFE_TSL2561::clearInterrupt(void)
 	// (Also see getError() below)
 {
 	// Set up command byte for interrupt clear
-	Wire.beginTransmission(_i2c_address);
-	Wire.write(TSL2561_CMD_CLEAR);
-	_error = Wire.endTransmission();
+	Wire1.beginTransmission(_i2c_address);
+	Wire1.write(TSL2561_CMD_CLEAR);
+	_error = Wire1.endTransmission();
 	if (_error == 0)
 		return(true);
 
@@ -336,17 +336,17 @@ boolean SFE_TSL2561::readByte(unsigned char address, unsigned char &value)
 	// (Also see getError() above)
 {
 	// Set up command byte for read
-	Wire.beginTransmission(_i2c_address);
-	Wire.write((address & 0x0F) | TSL2561_CMD);
-	_error = Wire.endTransmission();
+	Wire1.beginTransmission(_i2c_address);
+	Wire1.write((address & 0x0F) | TSL2561_CMD);
+	_error = Wire1.endTransmission();
 
 	// Read requested byte
 	if (_error == 0)
 	{
-		Wire.requestFrom(_i2c_address,1);
-		if (Wire.available() == 1)
+		Wire1.requestFrom(_i2c_address,1);
+		if (Wire1.available() == 1)
 		{
-			value = Wire.read();
+			value = Wire1.read();
 			return(true);
 		}
 	}
@@ -362,11 +362,11 @@ boolean SFE_TSL2561::writeByte(unsigned char address, unsigned char value)
 	// (Also see getError() above)
 {
 	// Set up command byte for write
-	Wire.beginTransmission(_i2c_address);
-	Wire.write((address & 0x0F) | TSL2561_CMD);
+	Wire1.beginTransmission(_i2c_address);
+	Wire1.write((address & 0x0F) | TSL2561_CMD);
 	// Write byte
-	Wire.write(value);
-	_error = Wire.endTransmission();
+	Wire1.write(value);
+	_error = Wire1.endTransmission();
 	if (_error == 0)
 		return(true);
 
@@ -384,18 +384,18 @@ boolean SFE_TSL2561::readUInt(unsigned char address, unsigned int &value)
 	char high, low;
 	
 	// Set up command byte for read
-	Wire.beginTransmission(_i2c_address);
-	Wire.write((address & 0x0F) | TSL2561_CMD);
-	_error = Wire.endTransmission();
+	Wire1.beginTransmission(_i2c_address);
+	Wire1.write((address & 0x0F) | TSL2561_CMD);
+	_error = Wire1.endTransmission();
 
 	// Read two bytes (low and high)
 	if (_error == 0)
 	{
-		Wire.requestFrom(_i2c_address,2);
-		if (Wire.available() == 2)
+		Wire1.requestFrom(_i2c_address,2);
+		if (Wire1.available() == 2)
 		{
-			low = Wire.read();
-			high = Wire.read();
+			low = Wire1.read();
+			high = Wire1.read();
 			// Combine bytes into unsigned int
 			value = word(high,low);
 			return(true);
